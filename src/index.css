@@ -1,0 +1,161 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 240 15% 7%;
+    --foreground: 280 5% 93%;
+
+    --card: 243 23% 12%;
+    --card-foreground: 280 5% 93%;
+
+    --popover: 243 23% 12%;
+    --popover-foreground: 280 5% 93%;
+
+    --primary: 264 69% 47%;
+    --primary-foreground: 280 5% 93%;
+
+    --secondary: 264 32% 62%;
+    --secondary-foreground: 243 23% 12%;
+
+    --muted: 243 23% 18%;
+    --muted-foreground: 264 15% 70%;
+
+    --accent: 275 100% 87%;
+    --accent-foreground: 243 23% 12%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 280 5% 93%;
+
+    --border: 243 23% 18%;
+    --input: 243 23% 18%;
+    --ring: 264 69% 47%;
+
+    /* Custom portfolio colors */
+    --portfolio-primary: 264 69% 22%;
+    --portfolio-secondary: 264 32% 62%;
+    --portfolio-accent: 275 100% 87%;
+    --portfolio-light: 240 5% 93%;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--portfolio-primary)), hsl(var(--primary)));
+    --gradient-card: linear-gradient(135deg, hsl(var(--card)), hsl(var(--muted)));
+    --gradient-accent: linear-gradient(135deg, hsl(var(--portfolio-secondary)), hsl(var(--portfolio-accent)));
+    
+    /* Shadows */
+    --shadow-glow: 0 0 40px hsl(var(--primary) / 0.3);
+    --shadow-card: 0 8px 32px hsl(var(--portfolio-primary) / 0.3);
+    --shadow-hover: 0 16px 64px hsl(var(--primary) / 0.4);
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .bento-card {
+    @apply bg-gradient-to-br from-card/80 to-muted/60 backdrop-blur-xl rounded-2xl p-6 transition-all duration-300 hover:shadow-[var(--shadow-hover)] hover:-translate-y-1 border border-border/50 relative;
+  }
+  
+  .bento-card::before {
+    content: '';
+    @apply absolute inset-0 rounded-2xl bg-gradient-to-br from-white/10 to-transparent pointer-events-none;
+  }
+  
+  .tech-pill {
+    @apply px-4 py-2 bg-gradient-to-r from-primary/20 to-secondary/20 text-foreground rounded-full text-sm font-medium border border-primary/30 transition-all duration-200 hover:from-primary/30 hover:to-secondary/30 hover:scale-105;
+  }
+  
+  .stat-card {
+    @apply bg-gradient-to-br from-primary/10 to-accent/10 backdrop-blur-xl rounded-xl p-4 text-center transition-all duration-300 hover:from-primary/20 hover:to-accent/20 hover:scale-105 border border-primary/20 relative;
+  }
+  
+  .stat-card::before {
+    content: '';
+    @apply absolute inset-0 rounded-xl bg-gradient-to-br from-white/5 to-transparent pointer-events-none;
+  }
+  
+  .profile-button {
+    @apply px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 hover:shadow-lg;
+  }
+  
+  .profile-button-primary {
+    @apply profile-button bg-gradient-to-r from-primary to-secondary text-primary-foreground hover:from-primary/90 hover:to-secondary/90;
+  }
+  
+  .profile-button-secondary {
+    @apply profile-button bg-gradient-to-r from-secondary/20 to-accent/20 text-foreground border border-secondary/30 hover:from-secondary/30 hover:to-accent/30;
+  }
+  
+  .glow-text {
+    @apply bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent;
+  }
+}
