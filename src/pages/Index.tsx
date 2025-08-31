@@ -194,7 +194,7 @@ const Index = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <Users className="w-4 h-4 text-primary" />
-                  <span>English, Hindi, Kannada</span>
+                  <span>Telugu, Tamil, English, Hindi, Kannada</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Star className="w-4 h-4 text-primary" />
