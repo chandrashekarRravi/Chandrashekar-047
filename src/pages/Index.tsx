@@ -433,20 +433,20 @@ const Index = () => {
             whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
           >
             <h3 className="text-xl font-bold mb-4 glow-text">Let's Make Magic Happen Together!</h3>
-            <div className="flex justify-center gap-4 mb-4">
-              <Button asChild className="profile-button-primary">
+           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
+              <Button asChild className="profile-button-primary w-full sm:w-auto">
                 <a href="mailto:chandrashaker5412@gmail.com">
                   <Mail className="w-4 h-4 mr-2" />
                   Email Me
                 </a>
               </Button>
-              <Button asChild className="profile-button-secondary">
+              <Button asChild className="profile-button-secondary w-full sm:w-auto">
                 <a href="tel:+916366189346">
                   <MessageCircle className="w-4 h-4 mr-2" />
                   Schedule a Call
                 </a>
               </Button>
-              <Button asChild className="profile-button-secondary">
+              <Button asChild className="profile-button-secondary w-full sm:w-auto">
                 <a href="sms:+916366189346">
                   <MessageCircle className="w-4 h-4 mr-2" />
                   Send SMS
