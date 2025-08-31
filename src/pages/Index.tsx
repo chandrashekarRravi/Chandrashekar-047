@@ -204,7 +204,7 @@ const Index = () => {
 
               <div className="flex flex-wrap gap-3 justify-center">
                 <Button asChild className="profile-button-primary">
-                  <a href="/Chnadrashekar.pdf" >
+                  <a href="/Chandrashekar.pdf" >
                   <Download className="w-4 h-4 mr-2" />
                   Resume Download
                   </a>
