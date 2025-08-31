@@ -203,9 +203,11 @@ const Index = () => {
               </div>
 
               <div className="flex flex-wrap gap-3 justify-center">
-                <Button className="profile-button-primary">
+                <Button asChild className="profile-button-primary">
+                  <link href="/Chnadrashekar.pdf" >
                   <Download className="w-4 h-4 mr-2" />
                   Resume Download
+                  </link>
                 </Button>
                 <Button asChild className="profile-button-secondary">
                   <a href="https://www.instagram.com/chan.drashekar23/" target="_blank" rel="noopener noreferrer">
