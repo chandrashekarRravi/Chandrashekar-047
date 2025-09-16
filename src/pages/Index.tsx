@@ -198,7 +198,7 @@ const Index = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <Star className="w-4 h-4 text-primary" />
-                  <span>JNNCE Graduate</span>
+                  <span>JNNCE,Shimoga </span>
                 </div>
               </div>
 
