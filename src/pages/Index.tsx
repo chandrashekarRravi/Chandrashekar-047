@@ -214,18 +214,25 @@ const Index = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <Users className="w-4 h-4 text-primary" />
-                  <span>English, Hindi, Kannada</span>
+                  <span>Telugu, Tamil, English, Hindi, Kannada</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Star className="w-4 h-4 text-primary" />
+
                   <span>Final Year@JNNCE</span>
+                  <span>JNNCE,Shimoga </span>
+
                 </div>
               </div>
               <div className="flex flex-wrap gap-3 justify-center">
                 <Button asChild className="profile-button-primary">
+
                   <a href="/driveChandrashekarR.pdf" download>
                     <Download className="w-4 h-4 mr-2" />
                     Resume Download
+                  <a href="/Chandrashekar.pdf" >
+                  <Download className="w-4 h-4 mr-2" />
+                  Resume Download/</a>
                   </a>
                 </Button>
                 <Button asChild className="profile-button-secondary">
@@ -453,7 +460,8 @@ const Index = () => {
           >
             <h3 className="text-xl font-bold mb-4 glow-text">Let's Make Magic Happen Together!</h3>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
-              <Button asChild className="profile-button-primary w-full sm:w-auto">
+           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
+        <Button asChild className="profile-button-primary w-full sm:w-auto">
                 <a href="mailto:chandrashaker5412@gmail.com">
                   <Mail className="w-4 h-4 mr-2" />
                   Email Me
@@ -477,6 +485,7 @@ const Index = () => {
                 <MessageCircle className="w-4 h-4" />
                 <span>+91 6366189346</span>
               </div>
+            </div>
             </div>
           </motion.div>
         </motion.div>
