@@ -230,9 +230,7 @@ const Index = () => {
                   <a href="/driveChandrashekarR.pdf" download>
                     <Download className="w-4 h-4 mr-2" />
                     Resume Download
-                  <a href="/Chandrashekar.pdf" >
-                  <Download className="w-4 h-4 mr-2" />
-                  Resume Download/</a>
+                  
                   </a>
                 </Button>
                 <Button asChild className="profile-button-secondary">
