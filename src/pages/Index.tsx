@@ -38,14 +38,24 @@ const testimonials = [
 
 const experiences = [
   {
-    company: 'Bluestock Fintech',
-    role: 'Software Developer Engineer Intern',
-    period: 'May 2025 – Jul 2025',
-    location: 'Shimoga, India',
+    company:'Freelance Full Stack Developer',
+    role:'Self-Employed / Independent',
+    period:'Jan 2024 - Present',
+    achievements:[
+      'Delivered end-to-end web solutions for startups, universities, and government clients using React.js, Node.js, MongoDB, and Tailwind CSS.',
+      'Built and deployed production-ready applications with REST APIs, authentication, responsive UI, and SEO optimization.',
+'Worked directly with clients to gather requirements and deliver scalable, high-performance solutions on time'
+    ]
+  },
+  {
+    company: 'Logisoft IT Services Pvt. Ltd. (Logisoft Technologies Inc.)',
+    role: 'React Developer Intern',
+    period: 'May 2025 – Present',
+    location: 'Remote',
     achievements: [
-      'Developed 15+ reusable React.js components with Tailwind CSS',
-      'Implemented JWT authentication and RBAC',
-      'Optimized MongoDB queries, cutting API response time by 30%'
+      'Contributing to React.js projects focusing on front-end development and UI optimization using Tailwind CSS and Bootstrap.',
+      'Collaborating in an Agile environment with Git and GitFlow for version control, improving team workflow and deployment efficiency.',
+      'Implemented reusable components and modular architecture, enhancing code maintainability and reducing feature rollout time by20%.'
     ]
   },
   {
@@ -57,6 +67,16 @@ const experiences = [
       'Led development of website and e-commerce platform',
       'Launched 12+ features used by 500+ active members',
       'Mentored 6 developers, reducing onboarding time by 40%'
+    ]
+  },
+  {
+    company:'YUGMA Techfest 1.0 (IEEE JNNCE)',
+    role:'Event Organizer',
+    period:'Aug 2025',
+    location:'JNNCE,Shimoga',
+    achievements:[
+      'Organized and hosted a 3-day state-level technical symposium including a 24-hour hackathon.',
+      'Coordinated event logistics, sponsorships, and team participation for 100+ attendees.'
     ]
   }
 ];
@@ -198,14 +218,15 @@ const Index = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <Star className="w-4 h-4 text-primary" />
-                  <span>JNNCE Graduate</span>
+                  <span>Final Year@JNNCE</span>
                 </div>
               </div>
-
               <div className="flex flex-wrap gap-3 justify-center">
-                <Button className="profile-button-primary">
-                  <Download className="w-4 h-4 mr-2" />
-                  Resume Download
+                <Button asChild className="profile-button-primary">
+                  <a href="/driveChandrashekarR.pdf" download>
+                    <Download className="w-4 h-4 mr-2" />
+                    Resume Download
+                  </a>
                 </Button>
                 <Button asChild className="profile-button-secondary">
                   <a href="https://www.instagram.com/chan.drashekar23/" target="_blank" rel="noopener noreferrer">
@@ -314,9 +335,7 @@ const Index = () => {
               <div className="p-3 rounded-lg bg-muted/50 border border-primary/20">
                 <div className="text-xs font-semibold">University of Agricultural Sciences</div>
               </div>
-              <div className="p-3 rounded-lg bg-muted/50 border border-primary/20">
-                <div className="text-xs font-semibold">Bluestock Fintech</div>
-              </div>
+              
               <div className="p-3 rounded-lg bg-muted/50 border border-primary/20">
                 <div className="text-xs font-semibold">TechForge Club</div>
               </div>
@@ -333,13 +352,13 @@ const Index = () => {
             whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
           >
             <h3 className="text-xl font-bold mb-4 glow-text">Workflow Process</h3>
-            <div className="space-y-3">
+            <div className="space-y-10">
               {workflowSteps.map((step, index) => (
                 <div key={index} className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-full bg-gradient-to-r from-primary to-secondary flex items-center justify-center text-sm font-bold">
                     {index + 1}
                   </div>
-                  <span className="text-sm">{step}</span>
+                  <span className="text-sm" >{step}</span>
                 </div>
               ))}
             </div>
@@ -366,7 +385,7 @@ const Index = () => {
                     </div>
                   </div>
                   <ul className="text-xs text-muted-foreground space-y-1">
-                    {experience.achievements.slice(0, 2).map((achievement, idx) => (
+                    {(experience.achievements || []).slice(0, 20).map((achievement, idx) => (
                       <li key={idx} className="flex items-start gap-2">
                         <span className="text-primary mt-1">•</span>
                         <span>{achievement}</span>
@@ -433,20 +452,20 @@ const Index = () => {
             whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
           >
             <h3 className="text-xl font-bold mb-4 glow-text">Let's Make Magic Happen Together!</h3>
-            <div className="flex justify-center gap-4 mb-4">
-              <Button asChild className="profile-button-primary">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
+              <Button asChild className="profile-button-primary w-full sm:w-auto">
                 <a href="mailto:chandrashaker5412@gmail.com">
                   <Mail className="w-4 h-4 mr-2" />
                   Email Me
                 </a>
               </Button>
-              <Button asChild className="profile-button-secondary">
+              <Button asChild className="profile-button-secondary w-full sm:w-auto">
                 <a href="tel:+916366189346">
                   <MessageCircle className="w-4 h-4 mr-2" />
                   Schedule a Call
                 </a>
               </Button>
-              <Button asChild className="profile-button-secondary">
+              <Button asChild className="profile-button-secondary w-full sm:w-auto">
                 <a href="sms:+916366189346">
                   <MessageCircle className="w-4 h-4 mr-2" />
                   Send SMS
