@@ -156,7 +156,63 @@ const projects = [
   },
 ];
 
+const IntroScreen = ({ onComplete }: { onComplete: () => void }) => {
+  const [progress, setProgress] = useState(0);
+  const [showText, setShowText] = useState(false);
+  const [split, setSplit] = useState(false);
+
+  useEffect(() => {
+    let current = 0;
+    const interval = setInterval(() => {
+      current += 2;
+      setProgress(current);
+      if (current >= 100) {
+        clearInterval(interval);
+        setTimeout(() => setShowText(true), 400);
+        setTimeout(() => setSplit(true), 1600);
+        setTimeout(() => onComplete(), 2800);
+      }
+    }, 20);
+    return () => clearInterval(interval);
+  }, [onComplete]);
+
+  return (
+    <div className="fixed inset-0 z-[100] flex pointer-events-none">
+      <motion.div
+        className="h-full w-1/2 bg-[#050505] relative overflow-hidden"
+        initial={{ x: 0 }}
+        animate={{ x: split ? "-100%" : 0 }}
+        transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] }}
+      >
+        <div className="absolute top-1/2 right-0 translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-[#ffffff] font-heading z-10 pl-[0.5em]">
+          {!showText ? (
+            <span className="text-4xl md:text-6xl font-bold">{progress}%</span>
+          ) : (
+            <span className="text-2xl md:text-4xl font-bold tracking-[0.5em]">WE AND YOU</span>
+          )}
+        </div>
+      </motion.div>
+
+      <motion.div
+        className="h-full w-1/2 bg-[#050505] relative overflow-hidden"
+        initial={{ x: 0 }}
+        animate={{ x: split ? "100%" : 0 }}
+        transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] }}
+      >
+        <div className="absolute top-1/2 left-0 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-[#ffffff] font-heading z-10 pl-[0.5em]">
+          {!showText ? (
+            <span className="text-4xl md:text-6xl font-bold">{progress}%</span>
+          ) : (
+            <span className="text-2xl md:text-4xl font-bold tracking-[0.5em]">WE AND YOU</span>
+          )}
+        </div>
+      </motion.div>
+    </div>
+  );
+};
+
 const Index = () => {
+  const [introComplete, setIntroComplete] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const gridContainerRef = useRef<HTMLDivElement>(null);
   const targetRef = useRef<HTMLDivElement>(null);
@@ -234,7 +290,9 @@ const Index = () => {
   }, [cursorVariant]);
 
   return (
-    <div className="bg-[#000000] min-h-screen overflow-hidden [&_*]:cursor-none cursor-none relative">
+    <div className={`bg-[#000000] min-h-screen [&_*]:cursor-none cursor-none relative ${!introComplete ? 'h-screen overflow-hidden' : ''}`}>
+      {!introComplete && <IntroScreen onComplete={() => setIntroComplete(true)} />}
+
       {/* 3D Floating Background Services (Global) */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0 flex items-center justify-center" style={{ perspective: "1000px" }}>
         {allServices.map((service, i) => {
