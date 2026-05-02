@@ -18,13 +18,10 @@ export default {
 			}
 		},
 		extend: {
-<<<<<<< HEAD
-=======
 			fontFamily: {
 				sans: ['"Andada Pro"', "sans-serif"],
 				heading: ['Audiowide', "sans-serif"],
 			},
->>>>>>> 37aa8bb ( latest changes)
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
