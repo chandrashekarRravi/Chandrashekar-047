@@ -8,6 +8,7 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
+<<<<<<< HEAD
     --background: 240 15% 7%;
     --foreground: 280 5% 93%;
 
@@ -107,6 +108,67 @@ All colors MUST be HSL.
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
+=======
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+
+    --card: 240 5.9% 10%; /* zinc-900 */
+    --card-foreground: 0 0% 100%;
+
+    --popover: 240 5.9% 10%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 217.2 91.2% 59.8%; /* #3b82f6 blue-500 */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 215 20.2% 65.1%; /* #9ca3af gray-400 */
+
+    --accent: 217.2 91.2% 59.8%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 217.2 91.2% 59.8%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
+
+    --card: 240 5.9% 10%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 240 5.9% 10%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 217.2 91.2% 59.8%; /* #3b82f6 */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 215 20.2% 65.1%; /* #9ca3af */
+
+    --accent: 217.2 91.2% 59.8%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 217.2 91.2% 59.8%;
+>>>>>>> 37aa8bb ( latest changes)
   }
 }
 
@@ -116,7 +178,15 @@ All colors MUST be HSL.
   }
 
   body {
+<<<<<<< HEAD
     @apply bg-background text-foreground;
+=======
+    @apply bg-background text-foreground font-sans;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading tracking-wider;
+>>>>>>> 37aa8bb ( latest changes)
   }
 }
 
