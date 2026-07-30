@@ -88,7 +88,7 @@ const experiences = [
 const projects = [
   // Preserve existing cards (unchanged)
   {
-    title: 'Creative Calendar & Project Management Tool',
+    title: 'CCreative Work Flow System',
     description: 'Calendar-based app for team project tracking and feedback management.',
     tech: 'React.js (Vite), TypeScript, Tailwind CSS, Node.js, Express.js, MongoDB, Socket.io',
     link: 'https://smm.weandyoumarketing.com/login',
