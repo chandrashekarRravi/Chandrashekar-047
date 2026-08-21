@@ -1,8 +1,19 @@
+# ── Chandrashekar R | CSR Forge – robots.txt ──
+# https://chandrashekar.vercel.app/
+
+User-agent: *
+Allow: /
+Disallow: /src/
+Disallow: /.git/
+Crawl-delay: 5
+
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 2
 
 User-agent: Bingbot
 Allow: /
+Crawl-delay: 5
 
 User-agent: Twitterbot
 Allow: /
@@ -10,5 +21,11 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
-User-agent: *
+User-agent: LinkedInBot
 Allow: /
+
+User-agent: Slurp
+Allow: /
+
+# Sitemap
+Sitemap: https://chandrashekar.vercel.app/sitemap.xml

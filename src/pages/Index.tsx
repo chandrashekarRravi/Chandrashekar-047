@@ -188,7 +188,7 @@ const IntroScreen = ({ onComplete }: { onComplete: () => void }) => {
           {!showText ? (
             <span className="text-4xl md:text-6xl font-bold">{progress}%</span>
           ) : (
-            <span className="text-2xl md:text-4xl font-bold tracking-[0.5em]">WE AND YOU</span>
+            <span className="text-2xl md:text-4xl font-bold tracking-[0.5em]">CSR Forge</span>
           )}
         </div>
       </motion.div>
@@ -203,7 +203,7 @@ const IntroScreen = ({ onComplete }: { onComplete: () => void }) => {
           {!showText ? (
             <span className="text-4xl md:text-6xl font-bold">{progress}%</span>
           ) : (
-            <span className="text-2xl md:text-4xl font-bold tracking-[0.5em]">WE AND YOU</span>
+            <span className="text-2xl md:text-4xl font-bold tracking-[0.5em]">CSR Forge</span>
           )}
         </div>
       </motion.div>
@@ -428,7 +428,7 @@ const Index = () => {
             <motion.div ref={targetRef} className="col-span-2 md:col-span-2 md:row-span-2 rounded-[2rem] bg-zinc-900 overflow-hidden relative flex flex-col items-center justify-center p-6 border border-[#9ca3af]/20 group cursor-pointer hover:border-[#3b82f6]/50 transition-all duration-500">
               <motion.div style={{ opacity: centerOpacity }} className="flex flex-col items-center w-full">
                 <div className="w-24 h-24 md:w-32 md:h-32 rounded-full overflow-hidden mb-4 border-4 border-[#3b82f6]/20 shadow-xl group-hover:border-[#3b82f6] transition-colors duration-500">
-                  <img src="/chandra.png" alt="Profile" className="w-full h-full object-cover" />
+                  <img src="/chandrar.png" alt="Profile" className="w-full h-full object-cover" />
                 </div>
                 <h2 className="text-xl md:text-2xl font-bold text-[#ffffff] text-center group-hover:text-[#3b82f6] transition-colors duration-300">CHANDRASHEKAR R</h2>
                 <div className="mt-4 inline-flex items-center px-3 py-1 rounded-full bg-[#3b82f6]/20 text-[#3b82f6] text-xs font-medium border border-[#3b82f6]/30">
@@ -565,7 +565,7 @@ const Index = () => {
 
             <div className="flex flex-col md:flex-row items-center md:items-start gap-8 mb-16 border-b border-[#9ca3af]/20 pb-12">
               <div className="w-32 h-32 md:w-48 md:h-48 rounded-full overflow-hidden border-4 border-primary/20 shrink-0">
-                <img src="/chandra.png" alt="Profile" className="w-full h-full object-cover" />
+                <img src="/chandrar.png" alt="Profile" className="w-full h-full object-cover" />
               </div>
               <div className="text-center md:text-left">
                 <h2 className="text-4xl md:text-5xl font-black mb-4">Chandrashekar R</h2>
@@ -575,7 +575,7 @@ const Index = () => {
                     <a href="mailto:chandrashaker5412@gmail.com"><Mail className="w-4 h-4 mr-2" /> Contact Me</a>
                   </Button>
                   <Button variant="outline" asChild className="rounded-full">
-                    <a href="/driveChandrashekarR.pdf" download><Download className="w-4 h-4 mr-2" /> Resume</a>
+                    <a href="/Chandrashekar.pdf" download><Download className="w-4 h-4 mr-2" /> Resume</a>
                   </Button>
                 </div>
               </div>
