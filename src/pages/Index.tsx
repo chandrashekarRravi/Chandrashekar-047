@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Download, Instagram, MessageCircle, Mail, ExternalLink, Github, Linkedin, MapPin, Clock, Users, Star, Code, Zap, Briefcase, Calendar, X, Mouse, ArrowUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion, useScroll, useTransform, AnimatePresence, useMotionValue, useSpring, useMotionValueEvent } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const techStacks = [
   'HTML5', 'CSS3', 'JavaScript (ES6+)', 'React.js', 'Next.js (Basics)', 'TypeScript', 'Tailwind CSS', 'Bootstrap', 'Vite', 'Material UI',
@@ -292,6 +293,18 @@ const Index = () => {
   return (
     <div className={`bg-[#000000] min-h-screen [&_*]:cursor-none cursor-none relative ${!introComplete ? 'h-screen overflow-hidden' : ''}`}>
       {!introComplete && <IntroScreen onComplete={() => setIntroComplete(true)} />}
+
+      {/* CSR Forge Link */}
+      <div className="absolute top-6 right-6 md:top-8 md:right-12 z-50">
+        <Link 
+          to="/csr-forge"
+          onMouseEnter={() => setCursorVariant("project")}
+          onMouseLeave={() => setCursorVariant("default")}
+          className="uppercase text-[10px] md:text-[12px] tracking-[0.1em] font-bold text-white border border-white/20 bg-white/5 backdrop-blur-md px-4 py-2 rounded-full hover:border-[#3b82f6]/50 hover:bg-[#3b82f6]/10 hover:text-[#3b82f6] transition-all flex items-center gap-1 cursor-none"
+        >
+          CSR Forge ↗
+        </Link>
+      </div>
 
       {/* 3D Floating Background Services (Global) */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0 flex items-center justify-center" style={{ perspective: "1000px" }}>
