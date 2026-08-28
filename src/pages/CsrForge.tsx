@@ -212,7 +212,8 @@ export default function CsrForge() {
 
         {/* Desktop Nav */}
         <ul className="hidden md:flex items-center gap-8 uppercase text-[11px] tracking-[0.1em] font-semibold text-[#d4d2d2]">
-          {['#services', '#work', '#about', '#reviews', '#contact'].map((href, i) => (
+          <li><Link to="/csr-forge/services" className="hover:text-white transition-colors">services</Link></li>
+          {['#work', '#about', '#reviews', '#contact'].map((href, i) => (
             <li key={i}>
               <a href={href} className="hover:text-white transition-colors">
                 {href.replace('#', '')}
@@ -271,24 +272,52 @@ export default function CsrForge() {
           <div className="absolute inset-0 bg-[#080808]" />
           {/* Warm radial glow */}
           <div className="absolute right-0 top-0 w-[65%] h-full bg-[radial-gradient(ellipse_60%_80%_at_70%_40%,rgba(180,50,10,0.38)_0%,rgba(120,30,5,0.18)_50%,transparent_80%)]" />
-          {/* SVG abstract wave lines (matching reference) */}
-          <svg
+          {/* SVG abstract wave lines — 3D animated */}
+          <motion.svg
             aria-hidden="true"
-            className="absolute inset-0 w-full h-full opacity-[0.13]"
+            className="absolute inset-0 w-full h-full"
             viewBox="0 0 1440 900"
             preserveAspectRatio="xMidYMid slice"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
+            animate={rm ? {} : { y: [0, -8, 0] }}
+            transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
           >
-            {[...Array(14)].map((_, i) => (
-              <path
-                key={i}
-                d={`M${-100 + i * 30},900 C${300 + i * 20},${600 - i * 15} ${900 - i * 25},${300 + i * 18} ${1600 + i * 20},${-50 + i * 10}`}
-                stroke="#ff4400"
-                strokeWidth="1"
-              />
-            ))}
-          </svg>
+            {[...Array(14)].map((_, i) => {
+              // Perspective: lines further back (higher i) are dimmer + thinner
+              const depthFactor = i / 13; // 0 = front, 1 = far back
+              const opacity = 0.28 - depthFactor * 0.16;      // 0.28 → 0.12
+              const strokeW = 1.4 - depthFactor * 0.8;         // 1.4 → 0.6
+              const speed = 6 + i * 0.9;                        // near lines move faster
+              const amplitude = 14 - depthFactor * 9;           // near lines shift more
+              const delay = i * 0.35;
+              return (
+                <motion.path
+                  key={i}
+                  d={`M${-100 + i * 30},900 C${300 + i * 20},${600 - i * 15} ${900 - i * 25},${300 + i * 18} ${1600 + i * 20},${-50 + i * 10}`}
+                  stroke="#ff4400"
+                  strokeWidth={strokeW}
+                  strokeOpacity={opacity}
+                  initial={{ pathLength: 0, opacity: 0 }}
+                  animate={rm ? { opacity } : {
+                    pathLength: 1,
+                    opacity,
+                    y: [0, -amplitude, 0, amplitude * 0.6, 0],
+                  }}
+                  transition={{
+                    pathLength: { duration: 1.4, delay, ease: 'easeOut' },
+                    opacity:    { duration: 0.8, delay },
+                    y: {
+                      duration: speed,
+                      repeat: Infinity,
+                      ease: 'easeInOut',
+                      delay: delay * 0.5,
+                    },
+                  }}
+                />
+              );
+            })}
+          </motion.svg>
           {/* Fade to black at bottom */}
           <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-[#080808] to-transparent" />
         </div>

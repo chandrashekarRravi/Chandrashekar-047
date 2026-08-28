@@ -296,7 +296,7 @@ const Index = () => {
 
       {/* CSR Forge Link */}
       <div className="absolute top-6 right-6 md:top-8 md:right-12 z-50">
-        <Link 
+        <Link
           to="/csr-forge"
           onMouseEnter={() => setCursorVariant("project")}
           onMouseLeave={() => setCursorVariant("default")}
