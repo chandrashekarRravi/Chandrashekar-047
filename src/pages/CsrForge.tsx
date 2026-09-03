@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { CSR_FORGE } from '../config/csrforge';
-import { ArrowUpRight, Menu, X, Home, LayoutGrid, Phone, Folder, MapPin, Mail } from 'lucide-react';
+import { ArrowUpRight, Menu, X, Home, LayoutGrid, Phone, Folder, MapPin, Mail, Star } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform, useReducedMotion, AnimatePresence, type Variants } from 'framer-motion';
+import { useGoogleReviews } from '@/hooks/useGoogleReviews';
 
 // ─── Variants ────────────────────────────────────────────────────────────────
 
@@ -108,9 +109,197 @@ const FAQS = [
   { q: 'Do you work with businesses remotely?', a: 'Yes. We work with clients across India and globally through remote collaboration.' },
 ];
 
+// ─── Reviews Section ──────────────────────────────────────────────────────────
+
+function StarRating({ rating }: { rating: number }) {
+  return (
+    <div className="flex gap-0.5 mb-4">
+      {[1, 2, 3, 4, 5].map((star) => (
+        <Star
+          key={star}
+          className={`w-4 h-4 ${star <= rating ? 'text-[#ff4400] fill-[#ff4400]' : 'text-[#393939]'}`}
+        />
+      ))}
+    </div>
+  );
+}
+
+function ReviewCard({ review, index }: { review: { authorName: string; authorPhoto: string | null; authorUri: string | null; rating: number; text: string; relativePublishTimeDescription: string }; index: number }) {
+  return (
+    <motion.div
+      variants={fadeUp}
+      custom={index}
+      className="bg-[#111111] border border-[#262525] rounded-[8px] p-8 flex flex-col gap-4 hover:border-[#ff4400]/30 transition-colors duration-300"
+    >
+      <StarRating rating={review.rating} />
+      <p className="text-[15px] md:text-[16px] leading-[1.75] text-[#d4d2d2] italic flex-1">
+        "{review.text}"
+      </p>
+      <div className="flex items-center gap-3 pt-2 border-t border-[#262525]">
+        {review.authorPhoto ? (
+          <img
+            src={review.authorPhoto}
+            alt={review.authorName}
+            className="w-9 h-9 rounded-full object-cover border border-[#393939]"
+            referrerPolicy="no-referrer"
+          />
+        ) : (
+          <div className="w-9 h-9 rounded-full bg-[#ff4400]/20 flex items-center justify-center text-[#ff4400] font-bold text-sm border border-[#ff4400]/20">
+            {review.authorName.charAt(0).toUpperCase()}
+          </div>
+        )}
+        <div>
+          <p className="text-[13px] font-semibold text-white">{review.authorName}</p>
+          {review.relativePublishTimeDescription && (
+            <p className="text-[11px] text-[#525252] uppercase tracking-widest">{review.relativePublishTimeDescription}</p>
+          )}
+        </div>
+        {/* Google G badge */}
+        <div className="ml-auto">
+          <svg viewBox="0 0 24 24" className="w-5 h-5" aria-label="Google review">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+          </svg>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+function ReviewSkeleton() {
+  return (
+    <div className="bg-[#111111] border border-[#262525] rounded-[8px] p-8 flex flex-col gap-4 animate-pulse">
+      <div className="flex gap-1 mb-2">
+        {[...Array(5)].map((_, i) => <div key={i} className="w-4 h-4 rounded-sm bg-[#262525]" />)}
+      </div>
+      <div className="space-y-2 flex-1">
+        <div className="h-3 bg-[#262525] rounded w-full" />
+        <div className="h-3 bg-[#262525] rounded w-5/6" />
+        <div className="h-3 bg-[#262525] rounded w-4/6" />
+      </div>
+      <div className="flex items-center gap-3 pt-2 border-t border-[#262525]">
+        <div className="w-9 h-9 rounded-full bg-[#262525]" />
+        <div className="space-y-1">
+          <div className="h-3 w-24 bg-[#262525] rounded" />
+          <div className="h-2 w-16 bg-[#1a1a1a] rounded" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ReviewsSection() {
+  const { data, loading, error } = useGoogleReviews();
+
+  return (
+    <section id="reviews" className="px-6 md:px-12 py-24 md:py-32 border-t border-[#171617] bg-[#080808] relative z-20">
+      <div className="max-w-[1400px] mx-auto">
+        {/* Heading row */}
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14 md:mb-20">
+          <motion.h2
+            variants={slideLeft}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-80px' }}
+            className="font-heading font-black uppercase leading-[0.9] tracking-[-0.04em] text-[clamp(44px,8vw,110px)]"
+          >
+            WHAT<br />CLIENTS<br />
+            <span className="font-serif italic font-light tracking-normal text-[#d4d2d2] text-[clamp(36px,6vw,86px)]">Say.</span>
+          </motion.h2>
+
+          {/* Overall rating badge */}
+          {data && data.rating && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="flex flex-col items-start md:items-end gap-1 shrink-0"
+            >
+              <div className="flex items-baseline gap-2">
+                <span className="text-[clamp(48px,6vw,80px)] font-black leading-none">{data.rating.toFixed(1)}</span>
+                <span className="text-[#525252] text-sm font-semibold uppercase tracking-widest">/ 5</span>
+              </div>
+              <div className="flex gap-1">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <Star key={star} className={`w-5 h-5 ${star <= Math.round(data.rating!) ? 'text-[#ff4400] fill-[#ff4400]' : 'text-[#393939]'}`} />
+                ))}
+              </div>
+              <p className="text-[#525252] text-[12px] uppercase tracking-widest mt-1">
+                {data.userRatingCount} Google {data.userRatingCount === 1 ? 'review' : 'reviews'}
+              </p>
+            </motion.div>
+          )}
+        </div>
+
+        {/* Review cards */}
+        {loading && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[...Array(3)].map((_, i) => <ReviewSkeleton key={i} />)}
+          </div>
+        )}
+
+        {error && (
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="bg-[#111111] border border-[#262525] rounded-[8px] p-10 text-center"
+          >
+            <p className="text-[#525252] text-[15px] mb-6">Could not load reviews right now.</p>
+            <GhostBtn href={CSR_FORGE.gbpUrl} isExternal>View All Google Reviews</GhostBtn>
+          </motion.div>
+        )}
+
+        {data && !loading && (
+          <>
+            {data.reviews.length === 0 ? (
+              <motion.p
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                className="text-[#525252] text-[15px]"
+              >
+                No reviews yet. Be the first!
+              </motion.p>
+            ) : (
+              <motion.div
+                variants={stagger}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: '-60px' }}
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+              >
+                {data.reviews.map((review, i) => (
+                  <ReviewCard key={i} review={review} index={i} />
+                ))}
+              </motion.div>
+            )}
+
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+              className="mt-12 flex justify-center"
+            >
+              <GhostBtn href={CSR_FORGE.gbpUrl} isExternal>View All Google Reviews</GhostBtn>
+            </motion.div>
+          </>
+        )}
+      </div>
+    </section>
+  );
+}
+
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 export default function CsrForge() {
+
   const rm = useReducedMotion();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [showTopBtn, setShowTopBtn] = useState(false);
@@ -824,47 +1013,7 @@ export default function CsrForge() {
       </section>
 
       {/* ── 7. REVIEWS ─────────────────────────────────────────────────────── */}
-      <section id="reviews" className="px-6 md:px-12 py-24 md:py-32 border-t border-[#171617] bg-[#080808] relative z-20">
-        <div className="max-w-[1400px] mx-auto">
-          {/* Heading */}
-          <motion.h2
-            variants={slideLeft}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-80px' }}
-            className="font-heading font-black uppercase leading-[0.9] tracking-[-0.04em] text-[clamp(44px,8vw,110px)] mb-14 md:mb-20"
-          >
-            WHAT<br />CLIENTS<br />
-            <span className="font-serif italic font-light tracking-normal text-[#d4d2d2] text-[clamp(36px,6vw,86px)]">Say.</span>
-          </motion.h2>
-
-          {/* Review card placeholder */}
-          <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: '-60px' }}
-            className="bg-[#171617] border border-[#393939] rounded-[6px] p-10 md:p-16 flex flex-col md:flex-row gap-8 items-start"
-          >
-            {/* Stars + quote */}
-            <div className="md:flex-1">
-              <div className="flex gap-1 mb-6">
-                {[...Array(5)].map((_, i) => (
-                  <span key={i} className="text-[#ff4400] text-[18px]">★</span>
-                ))}
-              </div>
-              <p className="text-[16px] md:text-[18px] leading-[1.7] text-[#d4d2d2] italic mb-8">
-                "CSR Forge helped us build a stunning website and improve our online visibility. The results were beyond our expectations."
-              </p>
-              <p className="text-[13px] uppercase tracking-[0.1em] text-[#525252] font-semibold">— Client Name, Hosapete</p>
-            </div>
-            {/* CTA */}
-            <div className="flex flex-col gap-3">
-              <GhostBtn href={CSR_FORGE.gbpUrl} isExternal>View All Reviews</GhostBtn>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      <ReviewsSection />
 
       {/* ── 8. FAQ ──────────────────────────────────────────────────────────── */}
       <section className="px-6 md:px-12 py-24 md:py-32 border-t border-[#171617] bg-[#080808] relative z-20">
