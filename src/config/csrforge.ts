@@ -14,5 +14,6 @@ export const CSR_FORGE = {
   socials: {
     linkedin: "https://www.linkedin.com/in/chandra-shekar6366189346",
     github: "https://github.com/chandrashekarRravi",
+    instagram: "https://www.instagram.com/csr.forge/",
   }
 };

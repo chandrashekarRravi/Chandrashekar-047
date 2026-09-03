@@ -59,42 +59,42 @@ function GhostBtn({
 
 const SERVICES = [
   {
-    n: '01', icon: Globe, title: 'Website Development',
+    n: '01', icon: Globe, title: 'Website Development', slug: 'website-development',
     short: 'Modern, fast, conversion-focused websites built for real business goals.',
     bullets: ['Custom responsive design (mobile-first)', 'E-commerce & landing pages', 'Performance & Core Web Vitals optimised', 'CMS integration (WordPress, custom)', 'Ongoing maintenance & support'],
   },
   {
-    n: '02', icon: Search, title: 'SEO',
+    n: '02', icon: Search, title: 'SEO', slug: 'seo',
     short: 'Technical and on-page SEO that improves rankings and drives organic traffic.',
     bullets: ['Full technical SEO audit & fixes', 'Keyword research & content strategy', 'On-page optimisation', 'Schema markup & structured data', 'Monthly reporting & analysis'],
   },
   {
-    n: '03', icon: MapPin, title: 'Local SEO',
+    n: '03', icon: MapPin, title: 'Local SEO', slug: 'local-seo',
     short: 'Dominate local search results so nearby customers find you first.',
     bullets: ['Local keyword targeting', 'Citation building & cleanup', 'Google Maps ranking improvement', 'Review generation strategy', 'Location page optimisation'],
   },
   {
-    n: '04', icon: Star, title: 'Google Business Profile',
+    n: '04', icon: Star, title: 'Google Business Profile', slug: 'google-business-profile',
     short: 'Fully optimised GBP to build trust, visibility and local authority.',
     bullets: ['Profile setup & verification', 'Category & attribute optimisation', 'Photo & post management', 'Q&A and review management', 'Insights & performance tracking'],
   },
   {
-    n: '05', icon: Megaphone, title: 'Google Ads',
+    n: '05', icon: Megaphone, title: 'Google Ads', slug: 'google-ads',
     short: 'Targeted paid search campaigns that connect your brand with high-intent customers.',
     bullets: ['Campaign strategy & setup', 'Keyword & audience targeting', 'Ad copy writing & testing', 'Bid management & optimisation', 'Conversion tracking & reporting'],
   },
   {
-    n: '06', icon: Share2, title: 'Social Media',
+    n: '06', icon: Share2, title: 'Social Media', slug: 'social-media',
     short: 'Content strategy and management that builds audience, engagement and brand trust.',
     bullets: ['Platform strategy (Instagram, LinkedIn, FB)', 'Content calendar & creative production', 'Community management', 'Paid social campaigns', 'Analytics & growth reporting'],
   },
   {
-    n: '07', icon: TrendingUp, title: 'Digital Marketing',
+    n: '07', icon: TrendingUp, title: 'Digital Marketing', slug: 'digital-marketing',
     short: 'Full-funnel digital marketing strategy built around measurable growth.',
     bullets: ['Integrated channel strategy', 'Email marketing & automation', 'Funnel design & CRO', 'Analytics & performance tracking', 'Competitor analysis'],
   },
   {
-    n: '08', icon: Palette, title: 'Branding & Creative',
+    n: '08', icon: Palette, title: 'Branding & Creative', slug: 'branding-creative',
     short: 'Visual identity and creative assets that set you apart from the competition.',
     bullets: ['Logo & brand identity design', 'Brand guidelines & style system', 'Social media templates', 'Marketing collateral', 'Brand audit & refresh'],
   },
@@ -115,6 +115,20 @@ export default function CsrForgeServices() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeService, setActiveService] = useState<number | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  // On mount: if URL has a #slug, find the matching service, open it, and scroll to it
+  useEffect(() => {
+    const hash = window.location.hash.replace('#', '');
+    if (!hash) return;
+    const idx = SERVICES.findIndex(s => s.slug === hash);
+    if (idx === -1) return;
+    setActiveService(idx);
+    // Slight delay so the card renders before we scroll
+    setTimeout(() => {
+      const el = document.getElementById(hash);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 400);
+  }, []);
 
   useEffect(() => {
     document.title = 'Services | CSR Forge — Digital Marketing & Web Development';
@@ -293,11 +307,12 @@ export default function CsrForgeServices() {
               return (
                 <motion.div
                   key={i}
+                  id={svc.slug}
                   initial={{ opacity: 0, y: 28 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-40px' }}
                   transition={{ duration: 0.55, delay: (i % 2) * 0.08 }}
-                  className="bg-[#080808] relative group overflow-hidden cursor-pointer"
+                  className="bg-[#080808] relative group overflow-hidden cursor-pointer scroll-mt-24"
                   onClick={() => setActiveService(isActive ? null : i)}
                 >
                   <motion.div

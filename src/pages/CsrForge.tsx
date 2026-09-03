@@ -78,14 +78,14 @@ function GhostBtn({
 // ─── Services Data ────────────────────────────────────────────────────────────
 
 const SERVICES = [
-  { n: '01', t: 'WEBSITE DEVELOPMENT' },
-  { n: '02', t: 'SEO' },
-  { n: '03', t: 'LOCAL SEO' },
-  { n: '04', t: 'GOOGLE BUSINESS PROFILE' },
-  { n: '05', t: 'GOOGLE ADS' },
-  { n: '06', t: 'SOCIAL MEDIA' },
-  { n: '07', t: 'DIGITAL MARKETING' },
-  { n: '08', t: 'BRANDING & CREATIVE' },
+  { n: '01', t: 'WEBSITE DEVELOPMENT',      href: '/csr-forge/services#website-development' },
+  { n: '02', t: 'SEO',                       href: '/csr-forge/services#seo' },
+  { n: '03', t: 'LOCAL SEO',                 href: '/csr-forge/services#local-seo' },
+  { n: '04', t: 'GOOGLE BUSINESS PROFILE',   href: '/csr-forge/services#google-business-profile' },
+  { n: '05', t: 'GOOGLE ADS',                href: '/csr-forge/services#google-ads' },
+  { n: '06', t: 'SOCIAL MEDIA',              href: '/csr-forge/services#social-media' },
+  { n: '07', t: 'DIGITAL MARKETING',         href: '/csr-forge/services#digital-marketing' },
+  { n: '08', t: 'BRANDING & CREATIVE',       href: '/csr-forge/services#branding-creative' },
 ];
 
 // ─── Work Data ────────────────────────────────────────────────────────────────
@@ -436,16 +436,79 @@ export default function CsrForge() {
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-40 bg-[#080808] flex flex-col items-start justify-center px-8 gap-8 md:hidden"
           >
-            {['services', 'work', 'about', 'reviews', 'contact'].map((s, i) => (
-              <a
+            {/* Services — route link */}
+            <Link
+              to="/csr-forge/services"
+              onClick={() => setMobileOpen(false)}
+              className="uppercase text-[28px] font-bold tracking-wide hover:text-[#d4d2d2] transition-colors"
+            >
+              Services
+            </Link>
+
+            {/* Hash anchor links — close menu first, then scroll */}
+            {(['work', 'about', 'reviews', 'contact'] as const).map((s, i) => (
+              <button
                 key={i}
-                href={`#${s}`}
-                onClick={() => setMobileOpen(false)}
-                className="uppercase text-[28px] font-bold tracking-wide hover:text-[#d4d2d2] transition-colors"
+                onClick={() => {
+                  setMobileOpen(false);
+                  setTimeout(() => {
+                    const el = document.getElementById(s);
+                    if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  }, 320);
+                }}
+                className="uppercase text-[28px] font-bold tracking-wide hover:text-[#d4d2d2] transition-colors text-left"
               >
                 {s}
-              </a>
+              </button>
             ))}
+
+            {/* Social icons row */}
+            <div className="flex items-center gap-5 pt-2">
+              {/* Instagram */}
+              <a
+                href={CSR_FORGE.socials.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="CSR Forge on Instagram"
+                className="text-[#d4d2d2] hover:text-[#ff4400] transition-colors"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="w-7 h-7">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                  <circle cx="12" cy="12" r="4" />
+                  <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                </svg>
+              </a>
+              {/* LinkedIn */}
+              <a
+                href={CSR_FORGE.socials.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="CSR Forge on LinkedIn"
+                className="text-[#d4d2d2] hover:text-[#ff4400] transition-colors"
+              >
+                <svg viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7">
+                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                  <rect x="2" y="9" width="4" height="12" />
+                  <circle cx="4" cy="4" r="2" />
+                </svg>
+              </a>
+              {/* Google Business */}
+              <a
+                href={CSR_FORGE.gbpUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="CSR Forge on Google Business"
+                className="text-[#d4d2d2] hover:text-[#ff4400] transition-colors"
+              >
+                <svg viewBox="0 0 24 24" className="w-7 h-7">
+                  <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                  <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                  <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+                  <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+                </svg>
+              </a>
+            </div>
+
             <GhostBtn href={CSR_FORGE.gbpUrl} isExternal>Start A Project</GhostBtn>
           </motion.div>
         )}
@@ -768,17 +831,20 @@ export default function CsrForge() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-40px' }}
                   transition={{ duration: 0.5, delay: i * 0.07 }}
-                  className="border border-[#171617] md:border-b md:border-t-0 md:border-r-0 md:border-l-0 sm:even:border-l sm:even:border-[#171617] py-5 md:py-8 px-4 sm:px-8 flex items-center md:items-start justify-between md:justify-start gap-4 group mb-3 md:mb-0 rounded-[6px] md:rounded-none bg-[#0a0a0a] md:bg-transparent"
                 >
-                  <div className="flex items-center md:items-start gap-4 md:gap-4">
-                    <span className="font-heading md:font-serif md:italic font-black md:font-normal text-[#ff4400] md:text-[#525252] text-[14px] md:text-[16px] md:mt-[3px] shrink-0">{s.n}</span>
-                    <span className="uppercase text-[12px] md:text-[15px] font-bold tracking-[0.04em] leading-snug text-[#d4d2d2] group-hover:text-white md:group-hover:text-[#d4d2d2] transition-colors">
-                      {s.t}
-                    </span>
-                  </div>
-                  <svg className="w-4 h-4 text-[#525252] md:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
+                  <Link
+                    to={s.href}
+                    className="flex items-center md:items-start justify-between gap-4 group py-5 md:py-8 px-4 sm:px-8 border border-[#171617] md:border-b md:border-t-0 md:border-r-0 md:border-l-0 sm:even:border-l sm:even:border-[#171617] mb-3 md:mb-0 rounded-[6px] md:rounded-none bg-[#0a0a0a] md:bg-transparent hover:bg-[#111111] md:hover:bg-transparent transition-colors cursor-pointer"
+                  >
+                    <div className="flex items-center md:items-start gap-4">
+                      <span className="font-heading md:font-serif md:italic font-black md:font-normal text-[#ff4400] md:text-[#525252] text-[14px] md:text-[16px] md:mt-[3px] shrink-0">{s.n}</span>
+                      <span className="uppercase text-[12px] md:text-[15px] font-bold tracking-[0.04em] leading-snug text-[#d4d2d2] group-hover:text-white transition-colors">
+                        {s.t}
+                      </span>
+                    </div>
+                    {/* Arrow — always visible on mobile, appears on hover on desktop */}
+                    <ArrowUpRight className="w-4 h-4 text-[#525252] group-hover:text-[#ff4400] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all shrink-0" />
+                  </Link>
                 </motion.div>
               ))}
             </div>
@@ -845,43 +911,45 @@ export default function CsrForge() {
             SELECTED<br />WORK
           </motion.h2>
 
-          {/* Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {/* Grid — single column on mobile, 4 cols on desktop */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-4">
             {WORK.map((w, i) => {
               const isExternal = w.href.startsWith('http');
               const CardWrapper = ({ children }: { children: React.ReactNode }) =>
                 isExternal ? (
-                  <a href={w.href} target="_blank" rel="noopener noreferrer" className="block">
+                  <a href={w.href} target="_blank" rel="noopener noreferrer" className="block h-full">
                     {children}
                   </a>
                 ) : (
-                  <Link to={w.href} className="block">
+                  <Link to={w.href} className="block h-full">
                     {children}
                   </Link>
                 );
               return (
                 <motion.div
                   key={i}
-                  initial={{ clipPath: 'inset(100% 0 0 0)', opacity: 0 }}
-                  whileInView={{ clipPath: 'inset(0% 0 0 0)', opacity: 1 }}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-40px' }}
-                  transition={{ duration: 0.75, delay: i * 0.1, ease: 'easeOut' }}
-                  className="group relative overflow-hidden rounded-[4px] cursor-pointer"
+                  transition={{ duration: 0.6, delay: i * 0.08, ease: 'easeOut' }}
+                  className="group relative overflow-hidden rounded-[6px] cursor-pointer"
                 >
                   <CardWrapper>
-                    <div className="aspect-[4/5] relative overflow-hidden bg-[#171617]">
+                    {/* Mobile: landscape 16/9 — Desktop: portrait 4/5 */}
+                    <div className="aspect-[16/9] md:aspect-[4/5] relative overflow-hidden bg-[#171617]">
                       <img
                         src={w.img}
                         alt={w.title}
                         loading="lazy"
                         className="absolute inset-0 w-full h-full object-cover opacity-70 group-hover:opacity-90 group-hover:scale-105 transition-all duration-700"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#080808]/90 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#080808]/80 via-[#080808]/20 to-transparent" />
                     </div>
-                    <div className="absolute bottom-0 left-0 right-0 p-4">
+                    {/* Card text — inside on desktop, below image on mobile */}
+                    <div className="md:absolute md:bottom-0 md:left-0 md:right-0 p-4 bg-[#111111] md:bg-transparent">
                       <p className="uppercase text-[10px] tracking-[0.14em] text-[#ff4400] mb-1 font-semibold">{w.cat}</p>
-                      <h3 className="font-bold text-[14px] uppercase tracking-wide">{w.title}</h3>
-                      <p className="text-[11px] text-[#b5b2b2] mt-1 truncate leading-snug">{w.blurb}</p>
+                      <h3 className="font-bold text-[15px] md:text-[14px] uppercase tracking-wide leading-tight">{w.title}</h3>
+                      <p className="text-[12px] md:text-[11px] text-[#b5b2b2] mt-1 leading-snug line-clamp-2">{w.blurb}</p>
                     </div>
                   </CardWrapper>
                 </motion.div>
@@ -1145,15 +1213,63 @@ export default function CsrForge() {
             {/* Connect */}
             <motion.div variants={fadeUp}>
               <h4 className="uppercase text-[12px] md:text-[10px] tracking-[0.2em] text-[#ff4400] md:text-[#525252] mb-6 font-bold md:font-semibold">Connect</h4>
-              <ul className="space-y-3 text-[13px]">
+              <ul className="space-y-4 text-[13px]">
+                {/* Instagram */}
                 <li>
-                  <a href={CSR_FORGE.gbpUrl} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center justify-between md:justify-start gap-2 text-[#d4d2d2]">
-                    Google Business <ArrowUpRight className="w-4 h-4 text-[#d4d2d2] md:w-3 md:h-3" />
+                  <a
+                    href={CSR_FORGE.socials.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors flex items-center gap-3 text-[#d4d2d2] group"
+                  >
+                    <span className="w-8 h-8 rounded-full bg-[#262525] group-hover:bg-[#ff4400]/20 flex items-center justify-center transition-colors shrink-0">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                        <circle cx="12" cy="12" r="4" />
+                        <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+                      </svg>
+                    </span>
+                    Instagram
+                    <ArrowUpRight className="w-3 h-3 ml-auto opacity-50 group-hover:opacity-100 group-hover:text-[#ff4400] transition-all" />
                   </a>
                 </li>
+                {/* LinkedIn */}
                 <li>
-                  <a href={CSR_FORGE.socials.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors flex items-center justify-between md:justify-start gap-2 text-[#d4d2d2]">
-                    LinkedIn <ArrowUpRight className="w-4 h-4 text-[#d4d2d2] md:w-3 md:h-3" />
+                  <a
+                    href={CSR_FORGE.socials.linkedin}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors flex items-center gap-3 text-[#d4d2d2] group"
+                  >
+                    <span className="w-8 h-8 rounded-full bg-[#262525] group-hover:bg-[#ff4400]/20 flex items-center justify-center transition-colors shrink-0">
+                      <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                        <rect x="2" y="9" width="4" height="12" />
+                        <circle cx="4" cy="4" r="2" />
+                      </svg>
+                    </span>
+                    LinkedIn
+                    <ArrowUpRight className="w-3 h-3 ml-auto opacity-50 group-hover:opacity-100 group-hover:text-[#ff4400] transition-all" />
+                  </a>
+                </li>
+                {/* Google Business */}
+                <li>
+                  <a
+                    href={CSR_FORGE.gbpUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-white transition-colors flex items-center gap-3 text-[#d4d2d2] group"
+                  >
+                    <span className="w-8 h-8 rounded-full bg-[#262525] group-hover:bg-[#ff4400]/20 flex items-center justify-center transition-colors shrink-0">
+                      <svg viewBox="0 0 24 24" className="w-4 h-4">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
+                      </svg>
+                    </span>
+                    Google Business
+                    <ArrowUpRight className="w-3 h-3 ml-auto opacity-50 group-hover:opacity-100 group-hover:text-[#ff4400] transition-all" />
                   </a>
                 </li>
               </ul>
